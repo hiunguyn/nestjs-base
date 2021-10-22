@@ -10,20 +10,12 @@ import { CustomOrigin } from '@nestjs/common/interfaces/external/cors-options.in
 export class SocketIoAdapter extends AbstractWsAdapter {
   constructor(
     appOrHttpServer?: INestApplicationContext | any,
-    private corsOrigin?:
-      | boolean
-      | string
-      | RegExp
-      | (string | RegExp)[]
-      | CustomOrigin,
+    private corsOrigin?: boolean | string | RegExp | (string | RegExp)[] | CustomOrigin,
   ) {
     super(appOrHttpServer)
   }
 
-  public create(
-    port: number,
-    options?: any & { namespace?: string; server?: any },
-  ): any {
+  public create(port: number, options?: any & { namespace?: string; server?: any }): any {
     if (!options) {
       return this.createIOServer(port)
     }
@@ -61,10 +53,7 @@ export class SocketIoAdapter extends AbstractWsAdapter {
     handlers: MessageMappingProperties[],
     transform: (data: any) => Observable<any>,
   ) {
-    const disconnect$ = fromEvent(client, DISCONNECT_EVENT).pipe(
-      share(),
-      first(),
-    )
+    const disconnect$ = fromEvent(client, DISCONNECT_EVENT).pipe(share(), first())
 
     handlers.forEach(({ message, callback }) => {
       const source$ = fromEvent(client, message).pipe(

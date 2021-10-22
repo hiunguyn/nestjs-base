@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
@@ -19,15 +14,9 @@ export class AuthService {
   ) {}
 
   async signIn({ email, password }) {
-    const existUser = await this.userRepo.findOne(
-      { email },
-      { select: ['password'] },
-    )
+    const existUser = await this.userRepo.findOne({ email }, { select: ['password'] })
 
-    if (
-      !existUser ||
-      !(await bcrypt.compare(password || '', existUser.password))
-    ) {
+    if (!existUser || !(await bcrypt.compare(password || '', existUser.password))) {
       throw new HttpException(
         {
           statusCode: 401,
@@ -54,10 +43,7 @@ export class AuthService {
       )
     }
 
-    const hashPassword = await bcrypt.hash(
-      password,
-      +this.configService.get('SALT_ROUNDS'),
-    )
+    const hashPassword = await bcrypt.hash(password, +this.configService.get('SALT_ROUNDS'))
 
     try {
       await this.userRepo.insert({

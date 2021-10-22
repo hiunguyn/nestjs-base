@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { getConnection } from 'typeorm'
 
 import { TaskRepository } from '@/repository'

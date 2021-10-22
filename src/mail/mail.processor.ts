@@ -1,11 +1,5 @@
 import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer'
-import {
-  OnQueueActive,
-  OnQueueCompleted,
-  OnQueueFailed,
-  Process,
-  Processor,
-} from '@nestjs/bull'
+import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from '@nestjs/bull'
 import { Logger } from '@nestjs/common'
 import { Job } from 'bull'
 
@@ -27,10 +21,7 @@ export class MailProcessor {
 
   @OnQueueFailed()
   onError(job: Job<any>, error: any) {
-    this.logger.error(
-      `Failed job ${job.id} of type ${job.name}: ${error.message}`,
-      error.stack,
-    )
+    this.logger.error(`Failed job ${job.id} of type ${job.name}: ${error.message}`, error.stack)
   }
 
   @Process('send mail')

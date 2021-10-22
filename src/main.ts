@@ -9,6 +9,7 @@ import { AppModule } from '@/app.module'
 import { swaggerConfig } from '@/app.swagger'
 import { JwtGuard } from '@/jwt'
 import { SocketIoAdapter } from '@/adapter'
+import { RolesGuard } from '@/guards'
 
 // eslint-disable-next-line prettier/prettier
 (async () => {
@@ -18,7 +19,7 @@ import { SocketIoAdapter } from '@/adapter'
   app.enableCors()
   app.use(morgan('dev'))
   app.use(json({ limit: '50mb' }))
-  app.useGlobalGuards(new JwtGuard(reflector))
+  app.useGlobalGuards(new JwtGuard(reflector), new RolesGuard(reflector))
   app.useWebSocketAdapter(new SocketIoAdapter(app, true))
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)

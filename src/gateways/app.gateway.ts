@@ -12,9 +12,7 @@ import { Server, Socket } from 'socket.io'
 import { GatewayGuard } from '@/guards'
 
 @WebSocketGateway()
-export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server
   private readonly logger = new Logger(AppGateway.name)

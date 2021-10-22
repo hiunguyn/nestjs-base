@@ -24,10 +24,7 @@ import { Public, User } from '@/decorator'
 @ApiBearerAuth()
 @Controller('tasks')
 export class TaskController {
-  constructor(
-    private readonly taskService: TaskService,
-    private readonly taskValidate: TaskValidate,
-  ) {}
+  constructor(private readonly taskService: TaskService, private readonly taskValidate: TaskValidate) {}
 
   @HttpCode(201)
   @Post()
@@ -39,11 +36,7 @@ export class TaskController {
 
   @HttpCode(200)
   @Get()
-  async getAllTasks(
-    @User('id') userId: number,
-    @Query('limit') limit: number,
-    @Query('offset') offset: number,
-  ) {
+  async getAllTasks(@User('id') userId: number, @Query('limit') limit: number, @Query('offset') offset: number) {
     await this.taskValidate.getAllTask({ limit, offset })
 
     return this.taskService.getAllTask(userId, limit, offset)
@@ -59,10 +52,7 @@ export class TaskController {
 
   @HttpCode(204)
   @Delete('/:taskId')
-  async removeTask(
-    @User('id') userId: number,
-    @Param('taskId') taskId: number,
-  ) {
+  async removeTask(@User('id') userId: number, @Param('taskId') taskId: number) {
     await this.taskValidate.taskId({ taskId })
 
     return this.taskService.removeTask(userId, taskId)
@@ -70,11 +60,7 @@ export class TaskController {
 
   @HttpCode(204)
   @Put('/:taskId')
-  async updateTask(
-    @User('id') userId: number,
-    @Body() updateTaskDto: UpdateTaskDto,
-    @Param('taskId') taskId: number,
-  ) {
+  async updateTask(@User('id') userId: number, @Body() updateTaskDto: UpdateTaskDto, @Param('taskId') taskId: number) {
     await this.taskValidate.updateTask({ taskId, ...updateTaskDto })
 
     await this.taskService.updateTask({ userId, taskId, ...updateTaskDto })

@@ -11,10 +11,7 @@ import { User as UserEntity } from '@/entities'
 @ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly authValidate: AuthValidate,
-  ) {}
+  constructor(private readonly authService: AuthService, private readonly authValidate: AuthValidate) {}
 
   @Public()
   @HttpCode(200)

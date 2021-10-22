@@ -7,9 +7,7 @@ import { Socket } from 'socket.io'
 export class GatewayGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest() as Socket
     const token = request.handshake.headers.authorization
     try {

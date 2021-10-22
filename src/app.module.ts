@@ -11,14 +11,7 @@ import { AppGateway } from '@/gateways'
 import { JwtModule } from '@/jwt'
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    DatabaseModule,
-    JwtModule,
-    BullModule,
-    AuthModule,
-    TaskModule,
-  ],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, JwtModule, BullModule, AuthModule, TaskModule],
   controllers: [AppController],
   providers: [AppService, AppGateway],
 })
